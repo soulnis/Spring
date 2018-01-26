@@ -3,6 +3,8 @@ package com.pil.service;
 import java.util.List;
 
 import com.pil.domain.BoardVO;
+import com.pil.domain.Criteria;
+import com.pil.domain.SearchCriteria;
 
 public interface BoardService {
 	public void regist(BoardVO board) throws Exception;
@@ -10,4 +12,8 @@ public interface BoardService {
 	public void modify(BoardVO board) throws Exception;
 	public void remove(Integer no) throws Exception;
 	public List<BoardVO> listAll() throws Exception;
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception;
+	public int listCountCriteria(Criteria cri) throws Exception;
+	public List<BoardVO> listSearchCriteria(SearchCriteria cri) throws Exception;
+	public int listSearchCount(SearchCriteria cri) throws Exception;
 }

@@ -28,4 +28,15 @@
 		DELETE FROM reply WHERE no = #{no};	
 	</delete> 
 
+	<select id="listPage" resultType="ReplyVO">
+		SELECT * FROM
+		reply
+		WHERE bno = #{bno}	
+		ORDER BY no DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM reply WHERE bno = #{bno}
+	</select>
  </mapper>

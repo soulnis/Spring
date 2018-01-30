@@ -1,5 +1,6 @@
 ## JAVA관련 공부
-
+`Spring STS3.8.2`
+`TomCat8.0`
 `MySql 5.7`
 ```
 -- Toy Project in Spring
@@ -45,4 +46,4 @@ ENGINE = InnoDB;
 1. MVC: JAVA와 DataBase(MySQL) 연결
 2. Toy: Member 관련
 3. ToyBoard: 게시판
-4. ToyBoardReply: 게시판-댓글추가
+4. ToyBoardReply: 게시판-댓글추가(페이징추가)

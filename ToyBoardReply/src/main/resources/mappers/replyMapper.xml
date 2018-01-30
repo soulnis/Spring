@@ -19,8 +19,7 @@
 
 	<update id="update">
 		UPDATE reply
-		SET replytext = #{replytext},
-		replyer = #{replyer}
+		SET replytext = #{replytext}
 		WHERE no = #{no};
 	</update>
 

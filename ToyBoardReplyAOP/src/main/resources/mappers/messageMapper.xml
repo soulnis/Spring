@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="com.pil.mapper.messageMapper">
+ 	<insert id="create">
+ 		INSERT INTO message(targetid, sender, message)
+ 		VALUES(#{targetid}, #{sender}, #{message});
+ 	</insert>	
+
+ 	<select id="readMessage" resultType="MessageVO">
+ 		SELECT * FROM message WHERE no = #{no};
+ 	</select>
+
+	<update id="updateState">
+		UPDATE message SET opendate = NOW() WHERE no = #{no}	;
+	</update>
+
+ </mapper>
+ 

@@ -2,6 +2,7 @@
 `Spring STS3.8.2`
 `TomCat8.0`
 `MySql 5.7`
+`JDK1.8`
 ```
 -- Toy Project in Spring
 CREATE SCHEMA `toyDB` DEFAULT CHARACTER SET utf8 ;
@@ -37,9 +38,38 @@ CREATE TABLE IF NOT EXISTS `toyDB`.`reply` (
 		FOREIGN KEY (`bno`)
 		REFERENCES `toyDB`.`board` (`no`)
 		ON DELETE CASCADE
+
+CREATE TABLE IF NOT EXISTS `toyDB`.`message` (
+  `no` INT NOT NULL AUTO_INCREMENT,
+  `message` TEXT NOT NULL,
+  `opendate` TIMESTAMP NULL,
+  `senddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `targetid` VARCHAR(50) NOT NULL,
+  `sender` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`no`),
+  INDEX `fk_user_target` (`targetid` ASC),
+  INDEX `fk_user_sender` (`sender` ASC),
+  CONSTRAINT `fk_user_target`
+    FOREIGN KEY (`targetid`)
+    REFERENCES `toyDB`.`member` (`userid`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_sender`
+    FOREIGN KEY (`sender`)
+    REFERENCES `toyDB`.`member` (`userid`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+ALTER TABLE `toyDB`.`message` 
+CHANGE COLUMN `targetid` `targetid` VARCHAR(50) NOT NULL AFTER `no`,
+CHANGE COLUMN `sender` `sender` VARCHAR(50) NOT NULL AFTER `targetid`;
 		ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+ALTER TABLE `toyDB`.`member` 
+ADD COLUMN `point` INT NOT NULL DEFAULT 0 AFTER `updatedate`;
 ```
 
 
@@ -47,3 +77,4 @@ ENGINE = InnoDB;
 2. Toy: Member 관련
 3. ToyBoard: 게시판
 4. ToyBoardReply: 게시판-댓글추가(페이징추가)
+5. ToyBoardReplyAOP: 트랜젝션, AOP추가

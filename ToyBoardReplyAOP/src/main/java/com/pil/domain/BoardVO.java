@@ -9,6 +9,13 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private int viewcnt;
+	private int replycnt;
+	public int getReplycnt() {
+		return replycnt;
+	}
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
 	public Integer getNo() {
 		return no;
 	}

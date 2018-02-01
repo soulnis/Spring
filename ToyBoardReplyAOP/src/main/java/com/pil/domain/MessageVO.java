@@ -46,4 +46,7 @@ public class MessageVO {
 	public void setSenddate(Date senddate) {
 		this.senddate = senddate;
 	}
+	public String toString() {
+		return "no: "+no+", targetid: " + targetid + ", sender: " +sender + ", message: "+message;
+	}
 }

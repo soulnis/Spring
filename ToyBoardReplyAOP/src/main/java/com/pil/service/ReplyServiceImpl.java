@@ -5,45 +5,52 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pil.domain.Criteria;
 import com.pil.domain.ReplyVO;
+import com.pil.persistence.BoardDAO;
 import com.pil.persistence.ReplyDAO;
 
 @Service
 public class ReplyServiceImpl implements ReplyService {
 
-	@Inject
-	private ReplyDAO dao;
+	@Inject private ReplyDAO replyDAO;
+	@Inject private BoardDAO boardDAO;
 
 	@Override
 	public List<ReplyVO> listReply(Integer bno) throws Exception {
-		return dao.list(bno);
+		return replyDAO.list(bno);
 	}
 
+	@Transactional
 	@Override
 	public void addReply(ReplyVO vo) throws Exception {
-		dao.create(vo);
+		replyDAO.create(vo);
+		boardDAO.updateReplyCnt(vo.getBno(), 1);
 	}
 
 	@Override
 	public void modifyReply(ReplyVO vo) throws Exception {
-		dao.update(vo);
+		replyDAO.update(vo);
 	}
 
+	@Transactional
 	@Override
 	public void removeReply(Integer no) throws Exception {
-		dao.delete(no);
+		int bno = replyDAO.getBno(no);
+		replyDAO.delete(no);
+		boardDAO.updateReplyCnt(bno, -1);
 	}
 
 	@Override
 	public List<ReplyVO> listReplyPage(Integer bno, Criteria cri) throws Exception {
-		return dao.listPage(bno, cri);
+		return replyDAO.listPage(bno, cri);
 	}
 
 	@Override
 	public int count(Integer bno) throws Exception {
-		return dao.count(bno);
+		return replyDAO.count(bno);
 	}
 
 }

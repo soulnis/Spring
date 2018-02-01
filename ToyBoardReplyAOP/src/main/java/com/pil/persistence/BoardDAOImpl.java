@@ -1,6 +1,8 @@
 package com.pil.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -71,5 +73,17 @@ public class BoardDAOImpl implements BoardDAO {
 		return session.selectOne(namespace+".listSearchCount", cri);
 	}
 
+	@Override
+	public void updateReplyCnt(Integer no, int amount) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("amount", amount);
+		session.update(namespace+".updateReplyCnt", map);
+	}
+
+	@Override
+	public void updateViewCnt(Integer no) throws Exception {
+		session.update(namespace+".updateViewCnt", no);
+	}
 
 }

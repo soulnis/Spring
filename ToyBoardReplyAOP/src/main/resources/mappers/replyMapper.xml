@@ -38,4 +38,8 @@
 	<select id="count" resultType="int">
 		SELECT COUNT(*) FROM reply WHERE bno = #{bno}
 	</select>
+
+	<select id="getBno" resultType="int">
+		SELECT bno FROM reply WHERE no = #{no};	
+	</select>
  </mapper>

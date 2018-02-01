@@ -70,6 +70,10 @@ ENGINE = InnoDB;
 
 ALTER TABLE `toyDB`.`member` 
 ADD COLUMN `point` INT NOT NULL DEFAULT 0 AFTER `updatedate`;
+
+
+ALTER TABLE `toyDB`.`board` 
+ADD COLUMN `replycnt` INT NOT NULL DEFAULT 0 AFTER `viewcnt`;
 ```
 
 
@@ -78,3 +82,4 @@ ADD COLUMN `point` INT NOT NULL DEFAULT 0 AFTER `updatedate`;
 3. ToyBoard: 게시판
 4. ToyBoardReply: 게시판-댓글추가(페이징추가)
 5. ToyBoardReplyAOP: 트랜젝션, AOP추가
+6. ToyBoardReplyFileUpload: 파일업로드추가

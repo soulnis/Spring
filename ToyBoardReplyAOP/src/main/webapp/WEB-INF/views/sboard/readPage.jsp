@@ -88,7 +88,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<ul class="timeline">
-		<li class="time-label" id="repliesDiv"><span class="bg-green">Replies List</span></li>
+		<li class="time-label" id="repliesDiv"><span class="bg-green">Replies List <small id="replycntSmall">[${boardVO.replycnt}]</small></span></li>
 	</ul>
 	<div class="text-center">
 		<ul id="pagination" class="pagination pagination-sm no-margin">

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
- <mapper namespace="com.pil.mapper.messageMapper">
+ <mapper namespace="com.pil.mapper.MessageMapper">
  	<insert id="create">
  		INSERT INTO message(targetid, sender, message)
  		VALUES(#{targetid}, #{sender}, #{message});

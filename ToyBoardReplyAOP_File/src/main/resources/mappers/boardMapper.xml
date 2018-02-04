@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+ <mapper namespace="com.pil.mapper.BoardMapper">
+	<insert id="create">
+		INSERT INTO board(title, content, writer) VALUES(#{title}, #{content}, #{writer});	
+	</insert> 
+
+	<select id="read" resultType="BoardVO"> 
+	<!-- <select id="read" resultType="com.pil.domain.BoardVO"> --> 
+	<!-- 패키지명을 전부 작성하기 귀찮을 경우, mybatis-config.xml에서 패키지명을 추가하여 작성한다. -->
+		SELECT * FROM board WHERE no = #{no};		
+	</select>
+
+	<update id="update">
+		UPDATE board SET title = #{title}, content=#{content} WHERE `no` = #{no};	
+	</update>
+
+	<delete id="delete">
+		DELETE FROM board WHERE `no` = #{no} 
+	</delete>
+
+	<select id="listAll" resultType="BoardVO">
+	<![CDATA[SELECT * FROM board ORDER BY regdate DESC, regdate DESC]]>
+	</select>
+
+	<select id="listPage" resultType="BoardVO">
+		<![CDATA[SELECT `no`, title, content, writer, regdate, viewcnt, replycnt FROM board ORDER BY `no` DESC, regdate DESC LIMIT #{page}]]>
+	</select>
+
+	<select id="listCriteria" resultType="BoardVO">
+		<!-- #{pageStart}을 호출할 경우 내부적으로 pageStart속성의 getter에 해당하는 getPage()를 호출한다. -->
+		<![CDATA[SELECT `no`, title, content, writer, regdate, viewcnt, replycnt FROM board ORDER BY `no` DESC, regdate DESC LIMIT #{pageStart}, #{perPageNum}]]>
+	</select>
+
+	<select id="countPaging" resultType="int">
+		<!-- <![CDATA[ SQL_QUERY문 ]]> : 쿼리문안에 "<", ">" 와 같이 닫는 태그를 표시하며, SQL에서는 비교의 조건을 걸 수있는 문자를 단순 문자열로 인식 하도록 한다.-->
+		<![CDATA[
+			SELECT count(no) FROM board;
+		]]> 
+	</select>
+
+	<sql id="search">
+		<if test="searchType != null"> 
+			<if test="searchType == 't'.toString()">WHERE title like CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'c'.toString()">WHERE content like CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'w'.toString()">WHERE writer like CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'tc'.toString()">WHERE title like CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'cw'.toString()">WHERE writer like CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%')</if>
+			<if test="searchType == 'tcw'.toString()">WHERE title like CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%') OR writer LIKE CONCAT('%', #{keyword}, '%')</if>
+		</if>
+	</sql>
+
+	<select id="listSearch" resultType="BoardVO">
+		SELECT * FROM
+		board
+		<include refid="search"></include>
+		ORDER BY no DESC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+		SELECT COUNT(no)	
+		FROM board
+		<include refid="search"></include>
+	</select>
+
+	<update id="updateReplyCnt">
+		UPDATE board SET replycnt = replycnt + #{amount} WHERE no = #{no};
+	</update>
+
+	<update id="updateViewCnt">
+		UPDATE board SET viewcnt = viewcnt + 1 WHERE no = #{no}	
+	</update>
+
+	<insert id="addAttach">
+		INSERT INTO attach(fullName, bno) VALUES(#{fullName}, LAST_INSERT_ID());
+	</insert>
+
+	<select id="getAttach" resultType="string">
+		SELECT fullname FROM attach WHERE bno = #{bno} ORDER BY regdate;
+	</select>
+
+	<delete id="deleteAttach">
+		DELETE FROM attach WHERE bno = #{no}	
+	</delete>
+
+	<insert id="replaceAttach">
+		INSERT INTO attach(fullName, bno) VALUES(#{fullName}, #{bno})
+	</insert>
+ </mapper>
+ 

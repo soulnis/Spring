@@ -34,7 +34,6 @@ small {
 			var files = event.originalEvent.dataTransfer.files;
 			var file = files[0];
 
-			console.log(file);
 
 			// FormData 는 IE10이상만 사용 브라우저 체크 필수!
 			var formData = new FormData();
@@ -61,20 +60,33 @@ small {
 						+"<small data-src="+data+">X</small>"
 						+"</div>"
 					} else {
-						console.log("fileName:", data);
 						str = ""
 						+"<div>"
 						+"<a href='displayFile?fileName="+data+"'>"
 						+getOriginalName(data)+"</a>"
 						+"<small data-src="+data+">X</small>"
 						+"</div>";
-						console.log("str: ", str);
 					}
 					$(".uploadedList").append(str); 
 				}
 			});
 		});
 
+		$(".uploadedList").on("click", "small", function(event) {
+			var that = $(this);
+			$.ajax({
+				url: "deleteFile"	,
+				type: "post",
+				data: {fileName:$(this).attr("data-src")},
+				dataType: "text",
+				success: function(result) {
+					if(result == "SUCCESS")	{
+						alert("deleted");
+						that.parent("div").remove();
+					}
+				}
+			});
+		});
 		function checkImageType(fileName) {
 			var pattern = /jpg$|gif$|png$|jpeg$/i;
 			return fileName.match(pattern);
@@ -86,7 +98,6 @@ small {
 			}
 			var front = fileName.substr(0,12);
 			var end = fileName.substr(14);
-			console.log("front+ent: ", front+end);
 			return front + end;	
 		}
 

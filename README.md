@@ -74,6 +74,20 @@ ADD COLUMN `point` INT NOT NULL DEFAULT 0 AFTER `updatedate`;
 
 ALTER TABLE `toyDB`.`board` 
 ADD COLUMN `replycnt` INT NOT NULL DEFAULT 0 AFTER `viewcnt`;
+
+CREATE TABLE IF NOT EXISTS `toyDB`.`attach` (
+                `fullName` VARCHAR(150) NOT NULL,
+                `bno` INT(11) NOT NULL,
+                `regdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`fullName`),
+                INDEX `fk_attach_board_idx` (`bno` ASC),
+                CONSTRAINT `fk_attach_board`
+                FOREIGN KEY (`bno`)
+                REFERENCES `toyDB`.`board` (`no`)
+                ON DELETE NO ACTION
+                ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 ```
 
 
@@ -82,4 +96,6 @@ ADD COLUMN `replycnt` INT NOT NULL DEFAULT 0 AFTER `viewcnt`;
 3. ToyBoard: 게시판
 4. ToyBoardReply: 게시판-댓글추가(페이징추가)
 5. ToyBoardReplyAOP: 트랜젝션, AOP추가
-6. FileUploadTest: File업로드 테스트중
+6. FileUploadTest: File업로드 테스트
+7. ToyBoardReplyAOP_FILE: 파일업로드 추가
+8. ToyBoardReplyLogin: 로그인기능 추가중..

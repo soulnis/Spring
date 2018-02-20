@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/8.7/styles/monokai_sublime.min.css">
+<script src="https://cdn.jsdelivr.net/highlight.js/8.7/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <style>
 .fileDrop {
 	width: 80%;
@@ -29,10 +33,12 @@
 						<div class="form-group">
 							<label for="exampleInputPassword1">Content</label>
 							<textarea class="form-control" name="content" rows="3" placeholder="Enter ..."></textarea>
+							<!-- <textarea class="form-control" name="content" rows="3" placeholder="Enter ..."></textarea> -->
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Writer</label> <input type="text" name="writer" class="form-control" placeholder="Enter Writer">
 						</div>
+						<pre><code id="code" contenteditable="true">var a;</code></pre>
 
 						<div class="form-group">
 							<label for="exampleInputEmail">File DROP Here</label>

@@ -8,5 +8,13 @@
 	<select id="login" resultType="MemberVO">
 		SELECT userid, userpw, username FROM member WHERE userid = #{userid} AND userpw = #{userpw};
 	</select>
+
+	<update id="keepLogin">
+		UPDATE member SET sessionKey =#{sessionId}, sessionLimit=#{next} WHERE userid = #{userid};
+	</update>
+
+	<select id="checkUserWithSessionKey" resultType="MemberVO">
+		SELECT * FROM member WHERE sessionKey = #{value} AND sessionLimit > now();
+	</select>
  </mapper>
  

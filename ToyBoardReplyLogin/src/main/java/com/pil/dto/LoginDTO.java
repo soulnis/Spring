@@ -3,7 +3,8 @@ package com.pil.dto;
 public class LoginDTO {
 	private String userid;
 	private String userpw;
-	private boolean useCookie;
+	private boolean userCookie;
+//	private String userCookie;
 	public String getUserid() {
 		return userid;
 	}
@@ -16,14 +17,20 @@ public class LoginDTO {
 	public void setUserpw(String userpw) {
 		this.userpw = userpw;
 	}
+//	public String isUseCookie() {
+//		return userCookie;
+//	}
+//	public void setUseCookie(String userCookie) {
+//		this.userCookie = userCookie;
+//	}
 	public boolean isUseCookie() {
-		return useCookie;
+		return userCookie;
 	}
-	public void setUseCookie(boolean useCookie) {
-		this.useCookie = useCookie;
+	public void setUseCookie(boolean userCookie) {
+		this.userCookie = userCookie;
 	}
 	@Override
 	public String toString() {
-		return "LoginDTO [userid=" + userid + ", userpw=" + userpw + ", useCookie=" + useCookie + "]";
+		return "LoginDTO [userid=" + userid + ", userpw=" + userpw + ", userCookie=" + userCookie + "]";
 	}
 }

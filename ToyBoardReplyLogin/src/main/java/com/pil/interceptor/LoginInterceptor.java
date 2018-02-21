@@ -1,5 +1,6 @@
 package com.pil.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,14 +20,20 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = req.getSession();
 		ModelMap modelMap = modelAndView.getModelMap();
 		Object memberVO = modelMap.get("memberVO");
-//		System.out.println("인터셉터결과"+memberVO);
 		if(memberVO != null) {
 			logger.info("new login success");
 			session.setAttribute(LOGIN, memberVO);
+			if(req.getParameter("userCookie") != null) {
+				logger.info("remember me........");
+				Cookie loginCookie = new Cookie("loginCookie", session.getId());
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(60 * 60 * 24 * 7); // 7일
+				res.addCookie(loginCookie);
+			}
 //			res.sendRedirect("/");
-		} else {
-			res.sendRedirect("/");
-		}
+			Object dest = session.getAttribute("dest");
+			res.sendRedirect(dest != null ? (String)dest : "/");
+		} 
 	}
 
 	@Override

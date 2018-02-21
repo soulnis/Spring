@@ -31,7 +31,7 @@
 							<textarea class="form-control" name="content" rows="3" placeholder="Enter ..."></textarea>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">Writer</label> <input type="text" name="writer" class="form-control" placeholder="Enter Writer">
+							<label for="exampleInputEmail1">Writer</label><input type="text" name="writer" class="form-control" value="${login.userid}" readonly>
 						</div>
 
 						<div class="form-group">

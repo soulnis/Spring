@@ -99,4 +99,4 @@ DEFAULT CHARACTER SET = utf8;
 6. FileUploadTest: File업로드 테스트
 7. ToyBoardReplyAOP_FILE: 파일업로드 추가
 8. ToyBoardReplyLogin: 로그인기능추가
-9. Security: 스프링시큐리티기초
+9. Security: 스프링시큐리완(DB연결)

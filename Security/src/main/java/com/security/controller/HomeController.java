@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.security.domain.UserVO;
+import com.security.domain.UserDTO;
 import com.security.service.HomeService;
 
 /**
@@ -37,9 +37,9 @@ public class HomeController {
 	public String home(Locale locale, Model model, @RequestParam(value="user", defaultValue="", required=true) String user) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		UserVO userVO = new UserVO();
-		userVO.setUser_name(user);
-		service.getUser(userVO);
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(user);
+		service.getUser(userDTO);
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

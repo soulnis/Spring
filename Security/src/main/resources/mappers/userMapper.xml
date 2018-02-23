@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+ <mapper namespace="com.security.mapper.userMapper">
+	<select id="login" resultMap="userModel" parameterType="String" >
+		SELECT 
+		user.idx, user.id, user.pw, user.name, role 
+		FROM user JOIN roles ON user.idx = roles.u_idx
+		WHERE user.id = #{id}; 
+	</select>
+
+    <resultMap type="com.security.domain.UserVO" id="userModel">
+        <id property="id" column="id" javaType="String" />
+        <result property="pw" column="pw" javaType="String" />
+        <result property="name" column="name" javaType="String" />
+        <collection property="roles" column="role" javaType="List" ofType="String">
+            <result column="role" />
+        </collection> 
+    </resultMap>
+
+ </mapper>

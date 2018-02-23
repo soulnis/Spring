@@ -3,24 +3,61 @@
 http://www.springframework.org/schema/beans/spring-beans.xsd 
 http://www.springframework.org/schema/security 
 http://www.springframework.org/schema/security/spring-security.xsd ">
-	
+
 	<!-- 스프링 시큐리티 설정파일 -->
-	<!-- EL사용을위하여 use-expressions="true" 옵션을 주도록한다 default옵션은 "false"-->
-	<http use-expressions="true">
+	<!-- EL사용을위하여 use-expressions="true" 옵션을 주도록한다 default옵션은 "false" -->
+	<!-- http은 접근 권한 관련 설정 -->
+	<http 
+		use-expressions="true"
+		auto-config="true"
+	>
 		<!-- <intercept-url pattern="/**" access="hasRole('USER')" /> -->
-<!-- 		<intercept-url pattern="/" access="hasRole('USER')"/>
-		<intercept-url pattern="/admin/test" access="hasRole('USER')"/>
-		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> -->
-		<form-login />
-		<logout />
+		<!-- <intercept-url pattern="/" access="hasRole('USER')"/> <intercept-url pattern="/admin/test" access="hasRole('USER')"/> <intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/> -->
+<!-- 
+## form-login
+login-page: 로그인페이지
+login-processing-url: 로그인 처리를 호출할때 사용 할 URL 
+username-parameter: 인자값으로 받아올 jsp파일의 name id
+password-parameter: 인자값으로 받아올 jsp파일의 name pw
+authentication-failure-url: 로그인실패시 리다이렉트url
+default-target-url: 로그인이후 호출될 url
+always-use-defalut-target: 로그인 후 항상 default-target-url 호출할 것인 지 여부. false 인 경우 로그인 페이지 이전화면을 호출한다.
+ -->
+		<form-login 
+			login-page="/login" 
+			username-parameter="id" 
+			password-parameter="pw" 
+			authentication-failure-url="/login?error=true" 
+			default-target-url="/mypage" 
+			always-use-default-target="true" 
+			login-processing-url="/login-ok"
+		/>
+
+<!-- 
+## logout
+invalidate-session: 로그아웃후 세션 삭제여부
+logout-success-url: 로그아웃후 리다이렉션 URI
+logout-url: 로그아웃 처리를 요청할때 사용할 URL 
+delete-cookies: 삭제할 쿠키명
+ -->
+
+		<logout 
+			logout-url="/logout-ok"
+			invalidate-session="true" 
+		/>
 	</http>
 
-	<authentication-manager>
+    <authentication-manager>
+        <authentication-provider user-service-ref="userService">
+        </authentication-provider>
+    </authentication-manager>
+
+<!-- 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="guest" password="guest" authorities="ROLE_USER" />
-				<user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+				<user name="admin" password="admin" authorities="ROLE_ADMIN" />
 			</user-service>
 		</authentication-provider>
-	</authentication-manager>
+	</authentication-manager> -->
 </beans:beans>
